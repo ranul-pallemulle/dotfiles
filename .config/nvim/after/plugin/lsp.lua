@@ -35,20 +35,20 @@ require('mason-lspconfig').setup({
         end,
         pyright = function()
             require('lspconfig').pyright.setup({
---                on_attach = lsp.on_attach,
---                settings = {
---                    pyright = {
---                        autoImportCompletion = true,
---                    },
---                    python = {
---                        analysis = {
---                            autoSearchPaths = true,
---                            diagnosticMode = 'openFilesOnly',
---                            useLibraryCodeForTypes = true,
---                            typeCheckingMode = 'off'
---                        }
---                    }
---                }
+                on_attach = lsp.on_attach,
+                settings = {
+                    pyright = {
+                        autoImportCompletion = true,
+                    },
+                    python = {
+                        analysis = {
+                            autoSearchPaths = true,
+                            diagnosticMode = 'openFilesOnly',
+                            useLibraryCodeForTypes = true,
+                            typeCheckingMode = 'off'
+                        }
+                    }
+                }
             })
         end,
     },
