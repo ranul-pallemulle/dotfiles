@@ -77,6 +77,13 @@ return require('packer').startup(function(use)
   	-- install jsregexp (optional!:).
   	run = "make install_jsregexp"
   })
+  use({
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      config = function() 
+          require("nvim-autopairs").setup {}
+      end
+  })
 
   if packer_bootstrap then
       require('packer').sync()
