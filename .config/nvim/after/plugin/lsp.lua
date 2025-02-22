@@ -17,6 +17,7 @@ require('mason-lspconfig').setup({
         'lua_ls',
         'pyright',
         'clangd',
+        'emmet_ls',
     },
     handlers = {
         function(server_name)

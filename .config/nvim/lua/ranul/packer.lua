@@ -81,8 +81,18 @@ return require('packer').startup(function(use)
   use({
       "windwp/nvim-autopairs",
       event = "InsertEnter",
-      config = function() 
+      config = function()
           require("nvim-autopairs").setup {}
+      end
+  })
+  use({
+      "folke/zen-mode.nvim",
+      config = function()
+          require("zen-mode").setup({
+              window = {
+                  width = 80
+              }
+          })
       end
   })
 
