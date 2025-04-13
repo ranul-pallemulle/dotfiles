@@ -95,6 +95,7 @@ return require('packer').startup(function(use)
           })
       end
   })
+  use("kmonad/kmonad-vim")
 
   if packer_bootstrap then
       require('packer').sync()
