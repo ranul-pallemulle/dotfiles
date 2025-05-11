@@ -28,3 +28,10 @@ vim.opt.updatetime = 50
 
 -- vim.opt.colorcolumn = "80"
 
+vim.diagnostic.config({
+    underline = true,
+    float = {
+        show_header = true,
+        source = true,
+    },
+})

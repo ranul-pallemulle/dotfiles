@@ -88,11 +88,11 @@ return require('packer').startup(function(use)
   use({
       "folke/zen-mode.nvim",
       config = function()
-          require("zen-mode").setup({
+          require("zen-mode").setup {
               window = {
-                  width = 80
+                  width = 120
               }
-          })
+          }
       end
   })
   use("kmonad/kmonad-vim")

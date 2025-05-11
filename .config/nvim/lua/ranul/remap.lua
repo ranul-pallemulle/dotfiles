@@ -14,3 +14,5 @@ vim.keymap.set("x", "<leader>p", "\"_dP") -- use <leader>p to paste without losi
 vim.keymap.set("n", "<leader>y", "\"+y") -- copy stuff to the system clipboard with <leader>y
 vim.keymap.set("v", "<leader>y", "\"+y")
 vim.keymap.set("n", "<leader>Y", "\"+Y")
+
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
