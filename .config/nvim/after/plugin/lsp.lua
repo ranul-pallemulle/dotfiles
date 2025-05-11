@@ -29,7 +29,7 @@ require('mason-lspconfig').setup({
         clangd = function()
             require('lspconfig').clangd.setup({
                 on_attach = lsp.on_attach,
-                cmd = {'clangd', '--query-driver=/usr/bin/g++'},
+                cmd = {'clangd', '--query-driver=/usr/bin/gcc,/use/bin/g++'},
             })
         end,
         pyright = function()
