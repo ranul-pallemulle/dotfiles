@@ -16,31 +16,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 local plugins = {
+    "vague2k/vague.nvim",
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.6',
-    -- or                              , branch = '0.1.x',
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.8', -- or branch = '0.1.x',
         dependencies = { {'nvim-lua/plenary.nvim'} }
-    },
-    {
-        'rose-pine/neovim',
-        name = 'rose-pine',
-    -- config = function()
-    --   vim.cmd('colorscheme rose-pine')
-    -- end
-    },
-    {
-        'rebelot/kanagawa.nvim',
-        name = 'kanagawa',
-        config = function()
-            vim.cmd('colorscheme kanagawa-dragon')
-        end
-    },
-    {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-      -- config = function()
-      --     vim.cmd('colorscheme catppuccin-latte')
-      -- end
     },
     {
         'nvim-lualine/lualine.nvim',
@@ -107,4 +87,8 @@ local plugins = {
     },
 }
 
-require("lazy").setup(plugins, {})
+require("lazy").setup({
+    spec = plugins,
+    install = { colorscheme = { "vague" } },
+    checker = { enabled = true },
+})
