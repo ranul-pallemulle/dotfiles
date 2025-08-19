@@ -9,11 +9,14 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv") -- when searching, keep cursor in the middle of the screen
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("x", "<leader>p", "\"_dP") -- use <leader>p to paste without losing the item in the paste buffer
-vim.keymap.set("x", "<leader>v", "\"+p") -- paste from system clipboard
-
-vim.keymap.set("n", "<leader>c", "\"+y") -- copy stuff to the system clipboard with <leader>c
-vim.keymap.set("v", "<leader>c", "\"+y")
-vim.keymap.set("n", "<leader>Y", "\"+Y")
+-- integrate with system clipboard
+vim.keymap.set("n", "<leader>y", "\"*y")
+vim.keymap.set("x", "<leader>y", "\"*y")
+vim.keymap.set("n", "<leader>p", "\"*p")
+vim.keymap.set("x", "<leader>p", "\"*p")
+vim.keymap.set("n", "<leader>Y", "\"+y")
+vim.keymap.set("x", "<leader>Y", "\"+y")
+vim.keymap.set("n", "<leader>P", "\"+P")
+vim.keymap.set("x", "<leader>P", "\"+P")
 
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)

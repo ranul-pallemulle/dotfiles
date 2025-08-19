@@ -8,7 +8,12 @@ end)
 
 -- to learn how to use mason.nvim
 -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
-require('mason').setup({})
+require('mason').setup({
+    registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+    },
+})
 require('mason-lspconfig').setup({
     ensure_installed = {
         'ts_ls',
@@ -51,6 +56,21 @@ require('mason-lspconfig').setup({
             })
         end,
     },
+})
+
+vim.lsp.config("roslyn", {
+    on_attach = function()
+        print("Roslyn LSP attached")
+    end,
+    settings = {
+        ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+        },
+        ["csharp|code_lens"] = {
+            dotnet_enable_references_code_lens = true,
+        },
+    }
 })
 
 local cmp = require('cmp')

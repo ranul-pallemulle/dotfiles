@@ -96,6 +96,15 @@ return require('packer').startup(function(use)
       end
   })
   use("kmonad/kmonad-vim")
+  use({
+      "seblyng/roslyn.nvim",
+      ft = { "cs" },
+      config = function()
+          require("roslyn").setup {
+              filewatching = "auto"
+          }
+      end
+  })
 
   if packer_bootstrap then
       require('packer').sync()
