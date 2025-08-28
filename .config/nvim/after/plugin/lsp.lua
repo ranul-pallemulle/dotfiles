@@ -60,7 +60,7 @@ require('mason-lspconfig').setup({
 
 vim.lsp.config("roslyn", {
     on_attach = function()
-        print("Roslyn LSP attached")
+        -- print("Roslyn LSP attached")
     end,
     settings = {
         ["csharp|inlay_hints"] = {

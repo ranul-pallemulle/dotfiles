@@ -33,7 +33,7 @@ local plugins = {
     'theprimeagen/harpoon',
     'mbbill/undotree',
     'tpope/vim-fugitive',
-    'tpope/vim-sleuth',
+    -- 'tpope/vim-sleuth',
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
