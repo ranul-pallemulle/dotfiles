@@ -7,8 +7,12 @@ import = [
 program = "tmux"
 
 [font]
-normal = { family = "HackNerdFontMono", style = "Regular" }
-bold = { family = "HackNerdFontMono", style = "Bold" }
-italic = { family = "HackNerdFontMono", style = "Italic" }
-bold_italic = { family = "HackNerdFontMono", style = "BoldItalic" }
+# normal = { family = "HackNerdFontMono", style = "Regular" }
+# bold = { family = "HackNerdFontMono", style = "Bold" }
+# italic = { family = "HackNerdFontMono", style = "Italic" }
+# bold_italic = { family = "HackNerdFontMono", style = "BoldItalic" }
+normal =      { family = "MesloLGMDZNerdFontMono", style = "Regular" }
+bold =        { family = "MesloLGMDZNerdFontMono", style = "Bold" }
+italic =      { family = "MesloLGMDZNerdFontMono", style = "Italic" }
+bold_italic = { family = "MesloLGMDZNerdFontMono", style = "BoldItalic" }
 size = 14
