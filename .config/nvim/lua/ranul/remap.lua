@@ -20,3 +20,9 @@ vim.keymap.set("n", "<leader>P", "\"+P")
 vim.keymap.set("x", "<leader>P", "\"+P")
 
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+
+-- remap switch between splits
+vim.keymap.set("n", "<M-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<M-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<M-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<M-l>", ":wincmd l<CR>")

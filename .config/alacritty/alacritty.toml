@@ -15,4 +15,4 @@ normal =      { family = "MesloLGMDZNerdFontMono", style = "Regular" }
 bold =        { family = "MesloLGMDZNerdFontMono", style = "Bold" }
 italic =      { family = "MesloLGMDZNerdFontMono", style = "Italic" }
 bold_italic = { family = "MesloLGMDZNerdFontMono", style = "BoldItalic" }
-size = 14
+size = 16

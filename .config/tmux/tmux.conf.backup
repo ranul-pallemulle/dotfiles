@@ -40,5 +40,25 @@ bind-key -n M-9 select-window -t 9
 bind-key -n C-S-Left swap-window -t -1\; select-window -t -1
 bind-key -n C-S-Right swap-window -t +1\; select-window -t +1
 
-# switching off the status bar
+# plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'erikw/tmux-powerline'
+set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'thewtex/tmux-mem-cpu-load'
+
+# styles
+# set -g status-style bg=colour235
+# set -g status-style fg=color136
+
+# right status
+# set -g status-interval 5
+# set -g status-right "#S #[fg=green,bg=black]#(~/.config/tmux/plugins/tmux-mem-cpu-load/tmux-mem-cpu-load --powerline-right --interval 5 --averages-count 0) #[fg=green,bg=blue]#{battery_status_bg} Batt: #{battery_percentage}"
+# set -g status-right-length 60
+# set -g status-right "$(~/scripts/battery.sh Discharging; ~/scripts/battery.sh Charging) | %e %B %R"
+
+# switching off the status bar for now
 set-option -g status off
+
+# initialize TMUX plugin manager (keep this line at the very bottom)
+run '~/.config/tmux/plugins/tpm/tpm'

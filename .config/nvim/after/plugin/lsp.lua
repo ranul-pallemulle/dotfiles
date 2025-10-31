@@ -21,7 +21,6 @@ require('mason-lspconfig').setup({
         'rust_analyzer',
         'lua_ls',
         'pyright',
-        'clangd',
         'emmet_ls',
     },
     handlers = {
@@ -38,12 +37,6 @@ require('mason-lspconfig').setup({
                     }
                 }
             }
-        end,
-        clangd = function()
-            require('lspconfig').clangd.setup({
-                on_attach = lsp.on_attach,
-                cmd = {'clangd', '--query-driver=/usr/bin/gcc,/use/bin/g++'},
-            })
         end,
         pyright = function()
             require('lspconfig').pyright.setup({
@@ -79,6 +72,23 @@ vim.lsp.config("roslyn", {
             dotnet_enable_references_code_lens = true,
         },
     }
+})
+
+vim.lsp.config("clangd", {
+    cmd = {
+        'clangd',
+        '--background-index',
+        '-j=8',
+        '--query-driver=/usr/bin/gcc,/usr/bin/g++,/usr/bin/clang,/usr/bin/clang++,/opt/cuda/bin/nvcc',
+        '--clang-tidy',
+        '--all-scopes-completion',
+        '--completion-style=detailed',
+        '--header-insertion-decorators',
+        '--header-insertion=iwyu',
+        '--pch-storage=memory',
+    },
+    root_markers = { '.clangd', 'compile_commands.json', 'compile_flags.txt' },
+    filetypes = { 'c', 'h', 'cpp', 'hpp', 'cu', 'cuh', 'cuda' }
 })
 
 local cmp = require('cmp')

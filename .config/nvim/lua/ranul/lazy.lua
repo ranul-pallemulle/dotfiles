@@ -23,6 +23,10 @@ local plugins = {
         dependencies = { {'nvim-lua/plenary.nvim'} }
     },
     {
+        'rose-pine/neovim',
+        name = "rose-pine"
+    },
+    {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
@@ -92,10 +96,11 @@ local plugins = {
             }
         end
     },
+    "mfussenegger/nvim-dap",
 }
 
 require("lazy").setup({
     spec = plugins,
-    install = { colorscheme = { "vague" } },
-    checker = { enabled = true },
+    install = { colorscheme = { "rose-pine" } },
+    checker = { enabled = false },
 })
