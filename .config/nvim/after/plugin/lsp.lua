@@ -1,63 +1,33 @@
-local lsp = require('lsp-zero')
-
-lsp.on_attach(function(client, bufnr)
-    -- see :help lsp-zero-keybindings
-    -- to learn the available actions
-    lsp.default_keymaps({buffer = bufnr})
-end)
-
--- to learn how to use mason.nvim
--- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
-require('mason').setup({
-    registries = {
-        "github:mason-org/mason-registry",
-        "github:Crashdummyy/mason-registry",
-    },
-})
-require('mason-lspconfig').setup({
-    ensure_installed = {
-        'ts_ls',
-        'eslint',
-        'rust_analyzer',
-        'lua_ls',
-        'pyright',
-        'emmet_ls',
-    },
-    handlers = {
-        function(server_name)
-            require('lspconfig')[server_name].setup({})
-        end,
-        lua_ls = function()
-            require('lspconfig').lua_ls.setup {
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = "LuaJIT"
-                        }
-                    }
-                }
+vim.lsp.config("lua_ls", {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            },
+            runtime = {
+                version = "LuaJIT"
             }
-        end,
-        pyright = function()
-            require('lspconfig').pyright.setup({
-                on_attach = lsp.on_attach,
-                settings = {
-                    pyright = {
-                        autoImportCompletion = true,
-                    },
-                    python = {
-                        analysis = {
-                            autoSearchPaths = true,
-                            diagnosticMode = 'openFilesOnly',
-                            useLibraryCodeForTypes = true,
-                            typeCheckingMode = 'off'
-                        }
-                    }
-                }
-            })
-        end,
+        }
     },
 })
+vim.lsp.enable("lua_ls")
+
+vim.lsp.config("pyright", {
+    settings = {
+        pyright = {
+            autoImportCompletion = true,
+        },
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                useLibraryCodeForTypes = true,
+                typeCheckingMode = 'on'
+            }
+        }
+    },
+})
+vim.lsp.enable("pyright")
 
 vim.lsp.config("roslyn", {
     on_attach = function()
@@ -73,6 +43,7 @@ vim.lsp.config("roslyn", {
         },
     }
 })
+vim.lsp.enable("roslyn")
 
 vim.lsp.config("clangd", {
     cmd = {
@@ -90,17 +61,4 @@ vim.lsp.config("clangd", {
     root_markers = { '.clangd', 'compile_commands.json', 'compile_flags.txt' },
     filetypes = { 'c', 'h', 'cpp', 'hpp', 'cu', 'cuh', 'cuda' }
 })
-
-local cmp = require('cmp')
-local cmp_format = lsp.cmp_format()
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-cmp.setup({
-    formatting = cmp_format,
-    mapping = cmp.mapping.preset.insert({
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(cmp_select),
-        ['<Tab>'] = cmp.mapping.select_next_item(cmp_select),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-Space>'] = cmp.mapping.complete(),
-    }),
-})
-
+vim.lsp.enable("clangd")
