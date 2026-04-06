@@ -11,8 +11,12 @@ program = "tmux"
 # bold = { family = "HackNerdFontMono", style = "Bold" }
 # italic = { family = "HackNerdFontMono", style = "Italic" }
 # bold_italic = { family = "HackNerdFontMono", style = "BoldItalic" }
-normal =      { family = "MesloLGMDZNerdFontMono", style = "Regular" }
-bold =        { family = "MesloLGMDZNerdFontMono", style = "Bold" }
-italic =      { family = "MesloLGMDZNerdFontMono", style = "Italic" }
-bold_italic = { family = "MesloLGMDZNerdFontMono", style = "BoldItalic" }
-size = 14
+# normal =      { family = "MesloLGMDZNerdFontMono", style = "Regular" }
+# bold =        { family = "MesloLGMDZNerdFontMono", style = "Bold" }
+# italic =      { family = "MesloLGMDZNerdFontMono", style = "Italic" }
+# bold_italic = { family = "MesloLGMDZNerdFontMono", style = "BoldItalic" }
+normal =      { family = "IosevkaNerdFontMono", style = "Regular" }
+bold =        { family = "IosevkaNerdFontMono", style = "Bold" }
+italic =      { family = "IosevkaNerdFontMono", style = "Italic" }
+bold_italic = { family = "IosevkaNerdFontMono", style = "BoldItalic" }
+size = 16
