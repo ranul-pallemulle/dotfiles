@@ -1,6 +1,10 @@
 vim.lsp.config("lua_ls", {
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
     settings = {
         Lua = {
+            codeLens = { enable = true },
+            hint = { enable = true, semicolon = 'Disable' },
             diagnostics = {
                 globals = { 'vim' }
             },
@@ -12,7 +16,15 @@ vim.lsp.config("lua_ls", {
 })
 vim.lsp.enable("lua_ls")
 
-vim.lsp.config("pyright", {
+vim.lsp.config("ts_ls", {
+    cmd = { "typescript-language-server", "--stdio" },
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact"}
+})
+vim.lsp.enable("ts_ls")
+
+vim.lsp.config("pyright", { -- NOT USED - using basedpyright (below) instead
+    cmd = { "pyright-langserver", "--stdio" },
+    filetypes = { "python" },
     settings = {
         pyright = {
             autoImportCompletion = true,
@@ -22,17 +34,29 @@ vim.lsp.config("pyright", {
                 autoSearchPaths = true,
                 diagnosticMode = 'openFilesOnly',
                 useLibraryCodeForTypes = true,
-                typeCheckingMode = 'on'
+                typeCheckingMode = 'off'
             }
         }
     },
 })
-vim.lsp.enable("pyright")
+vim.lsp.config("basedpyright", {
+    cmd = { "basedpyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    settings = {
+        basedpyright = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                typeCheckingMode = 'off',
+            },
+            disableTaggedHints = true,
+        }
+    }
+})
+--vim.lsp.enable("pyright")
+vim.lsp.enable("basedpyright")
 
 vim.lsp.config("roslyn", {
-    on_attach = function()
-        -- print("Roslyn LSP attached")
-    end,
     settings = {
         ["csharp|inlay_hints"] = {
             csharp_enable_inlay_hints_for_implicit_object_creation = true,
@@ -41,6 +65,11 @@ vim.lsp.config("roslyn", {
         ["csharp|code_lens"] = {
             dotnet_enable_references_code_lens = true,
         },
+        ["csharp|background_analysis"] = {
+            background_analysis = {
+                dotnet_analyzer_diagnostics_scope = "fullSolution",
+            }
+        }
     }
 })
 vim.lsp.enable("roslyn")
@@ -59,7 +88,29 @@ vim.lsp.config("clangd", {
         '--pch-storage=memory',
     },
     root_markers = { '.clangd', 'compile_commands.json', 'compile_flags.txt' },
-    filetypes = { 'c', 'h', 'cpp', 'hpp', 'cu', 'cuh', 'cuda' }
+    -- filetypes = { 'c', 'h', 'cpp', 'hpp', 'cu', 'cuh', 'cuda' }
+    filetypes = { 'c', 'cpp', 'cuda' }
 })
 vim.lsp.enable("clangd")
 
+vim.lsp.config("texlab", {
+    filetypes = { 'tex', 'bib' }
+})
+vim.lsp.enable("texlab")
+
+-- avalonia 
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+	pattern = { "*.axaml" },
+	callback = function(event)
+		vim.lsp.start {
+			name = "avalonia",
+			cmd = { "avalonia-ls" },
+			root_dir = vim.fn.getcwd(),
+		}
+	end
+})
+vim.filetype.add({
+    extension = {
+        axaml = "xml",
+    },
+})
