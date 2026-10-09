@@ -114,3 +114,6 @@ vim.filetype.add({
         axaml = "xml",
     },
 })
+
+-- keymaps
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)

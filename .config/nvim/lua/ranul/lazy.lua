@@ -146,170 +146,20 @@ local plugins = {
     },
     "mfussenegger/nvim-dap",
     {
-        "olimorris/codecompanion.nvim",
-        version = "^19.0.0",
-        opts = {
-            adapters = {
-                http = {
-                    openai = function()
-                        return require("codecompanion.adapters").extend("openai", {
-                            env = {
-                                api_key = "OPENAI_API_KEY"
-                            }
-                        })
-                    end,
-                    ollama = function()
-                        return require("codecompanion.adapters").extend("ollama", {
-                            schema = {
-                                num_ctx = {
-                                    -- default = 16384,
-                                    default = 32768,
-                                },
-                            },
-                        })
-                    end,
-                    ["llama.cpp"] = function()
-                        return require("codecompanion.adapters").extend("openai_compatible", {
-                            env = {
-                                url = "http://localhost:8090",
-                                api_key = os.getenv "LLAMA_API_KEY",
-                                chat_url = "/v1/chat/completions"
-                            },
-                            handlers = {
-                                form_messages = function(self, messages)
-                                    local system_content = {}
-                                    local other_messages = {}
-                                    -- 1. Separate system messages from everything else
-                                    for _, msg in ipairs(messages) do
-                                        if msg.role == "system" then
-                                            table.insert(system_content, msg.content)
-                                        else
-                                            table.insert(other_messages, msg)
-                                        end
-                                    end
-                                    local final_messages = {}
-                                    -- 2. If there are system messages, merge them into ONE message at the top
-                                    if #system_content > 0 then
-                                        table.insert(final_messages, {
-                                            role = "system",
-                                            content = table.concat(system_content, "\n\n"),
-                                        })
-                                    end
-                                    -- 3. Append all the user/assistant messages
-                                    for _, msg in ipairs(other_messages) do
-                                        table.insert(final_messages, msg)
-                                    end
-                                    -- 4. Pass the cleaned messages to the standard OpenAI handler
-                                    local openai = require "codecompanion.adapters.http.openai"
-                                    return openai.handlers.form_messages(self, final_messages)
-                                end,
-                                parse_message_meta = function(self, data)
-                                    local extra = data.extra
-                                    if extra and extra.reasoning_content then
-                                        data.output.reasoning = { content = extra.reasoning_content }
-                                        if data.output.content == "" then
-                                            data.output.content = nil
-                                        end
-                                    end
-                                    return data
-                                end,
-                            },
-                        })
-                    end,
-                },
-            },
-            interactions = {
-                inline = {
-                    adapter = {
-                        name = "ollama",
-                        model = "qwen2.5-coder:7b-instruct-q5_K_M",
-                        num_ctx = 8192,
-                    },
-                },
-                cmd = {
-                    adapter = {
-                        name = "ollama",
-                        model = "qwen2.5-coder:7b-instruct-q5_K_M",
-                        num_ctx = 8192,
-                    },
-                },
-                chat = {
-                    -- adapter = {
-                    --     name = "ollama",
-                    --     -- model = "mathstral:7b-v0.1-q6_K",
-                    --     model = "qwen3.6:35b-a3b-q4_K_M",
-                    -- },
-                    adapter = {
-                        name = "llama.cpp",
-                        model = "Check running llama.cpp instance for model info",
-                    },
-                    -- adapter = {
-                    --     name = "openai",
-                    --     model = "gpt-5.5",
-                    -- },
-                    opts = {
-                        system_prompt = function(ctx)
-                            local prompt_file = vim.fn.getcwd() .. "/.system-prompt"
-                            local ok, lines = pcall(vim.fn.readfile, prompt_file)
-                            if ok and #lines > 0 then
-                                return ctx.default_system_prompt .. "\n\n" .. table.concat(lines, "\n")
-                            end
-                            return ctx.default_system_prompt
-                        end,
-                    }
-                },
-            },
-            opts = {
-                log_level = "INFO",
-            },
-            display = {
-                chat = {
-                    show_settings = true,
-                }
-            },
-            mcp = {
-                servers = {
-                    searxng = {
-                        cmd = { "npx", "-y", "mcp-searxng" },
-                        env = {
-                            SEARXNG_URL = "http://localhost:8070",
-                        },
-                        tool_defaults = {
-                            require_approval_before = true,
-                        },
-                    },
-                },
-                opts = {
-                    default_servers = {
-                        -- "searxng",
-                    },
-                },
-            },
-            extensions = {
-                history = {
-                    enabled = true,
-                    opts = {
-                        keymap = "gh",
-                        save_chat_keymap = "sc",
-                        auto_save = true,
-                        auto_generate_title = false,
-                        title_generation_opts = {
-                            adapter = "ollama",
-                            model = "qwen3:0.6b",
-                        },
-                        chat_filter = function(chat_data)
-                            return chat_data.cwd == vim.fn.getcwd()
-                        end,
-                    }
-                }
+        "nickjvandyke/opencode.nvim",
+        version = "*", -- Latest stable release
+        config = function()
+            vim.g.opencode_opts = {
             }
-        },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "ravitemer/codecompanion-history.nvim",
-        },
-    },
+            -- Recommended/example keymaps
+            vim.keymap.set({ "n", "x" }, "<C-a>",   function() require("opencode").ask("@this: ") end,                    { desc = "Ask OpenCode…" })
+            vim.keymap.set({ "n", "x" }, "<C-x>",   function() require("opencode").select() end,                          { desc = "Select OpenCode…" })
+            vim.keymap.set({ "n", "x" }, "go",      function() return require("opencode").operator("@this ") end,         { desc = "Append range to OpenCode", expr = true })
+            vim.keymap.set({ "n" },      "goo",     function() return require("opencode").operator("@this ") .. "_" end,  { desc = "Append line to OpenCode", expr = true })
+            vim.keymap.set({ "n" },      "<S-C-u>", function() require("opencode").command("session.half.page.up") end,   { desc = "Scroll OpenCode up" })
+            vim.keymap.set({ "n" },      "<S-C-d>", function() require("opencode").command("session.half.page.down") end, { desc = "Scroll OpenCode down" })
+        end,
+    }
 }
 
 require("lazy").setup({
